@@ -24,11 +24,16 @@ class USER_HELPER extends BASE_HELPER
             'password' => ['required', Rule::unique('users')],
             "category" => ["required", "integer"],
             "type" => ["required", "integer"],
+            "pays_id" => ["required", "integer"],
+            "arrondissement_id" => ["required", "integer"],
+            "commune_id" => ["required", "integer"],
+            "quatier" => ["required", "integer"],
             "enseigne" => ["required"],
-            "indication" => ["required"],
             "sexe" => ["required"],
             "photo" => ["required"],
             "annee" => ["required"]
+            
+
         ];
     }
 
@@ -55,11 +60,26 @@ class USER_HELPER extends BASE_HELPER
             "type.required" => "Le type d'utilisateur est réquis!",
             "type.integer" => "Ce champ doit être un entier!",
 
+            "pays_id.required" => "Le pays d'utilisateur est réquis!",
+            "pays_id.integer" => "Ce champ doit être un entier!",
+
+               
+            "arrondissement_id.required" => "L'arrondissement d'utilisateur est réquis!",
+            "arrondissement_id.integer" => "Ce champ doit être un entier!",
+           
+            "commune_id.required" => "La commune d'utilisateur est réquis!",
+            "commune_id.integer" => "Ce champ doit être un entier!",
+          
+            "quatier.required" => "La commune d'utilisateur est réquis!",
+            "quatier.integer" => "Ce champ doit être un entier!",
+
+
             "enseigne.required" => "Le nom de l'enseigne  est réquis!",
             "indication.required" => "L'indication géographique  est réquis!",
             "photo.required" => "La photo de l'enseigne  est réquise!",
             "annee.required" => "La date de naissance est réquise!",
-            "sexe.required" => "Le sexe  est réquise!"
+            "sexe.required" => "Le sexe  est réquis!"
+
 
         ];
     }
@@ -181,6 +201,8 @@ class USER_HELPER extends BASE_HELPER
             $token = $user->createToken('MyToken', ['api-access'])->accessToken;
             // $cookie = Cookie("jwt", $token, 60 * 24);
             $user["token"] = $token;
+            $user["pays"] = $user->pays;
+            $user["ville"] = $user->Ville;
 
             #RENVOIE D'ERREURE VIA **sendResponse** DE LA CLASS BASE_HELPER
             return self::sendResponse($user, 'Vous etes connecté(e) avec succès!!');
@@ -192,7 +214,7 @@ class USER_HELPER extends BASE_HELPER
 
     static function getUsers()
     {
-        $users =  User::orderBy("id", "desc")->get();
+        $users =  User::with("Villes")->orderByorderBy("id", "desc")->get();
         return self::sendResponse($users, 'Tout les utilisatreurs récupérés avec succès!!');
     }
 
@@ -217,7 +239,7 @@ class USER_HELPER extends BASE_HELPER
 
     static function retrieveUsers($id)
     {
-        $user = User::find($id);
+        $user = User::with("pays","Ville")->find($id);
         if (!$user) {
             return self::sendError("Ce utilisateur n'existe pas!", 404);
         }

@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ArrondissementController;
+use App\Http\Controllers\Api\V1\ClasseController;
+use App\Http\Controllers\Api\V1\CommuneController;
+use App\Http\Controllers\Api\V1\DivisionController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\Authorization;
-use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\DonController;
 use App\Http\Controllers\Api\V1\LikeController;
 use App\Http\Controllers\Api\V1\PaysController;
-use App\Http\Controllers\Api\V1\VillesController;
+use App\Http\Controllers\Api\V1\ProductCategoryController;
+use App\Http\Controllers\Api\V1\QuatierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +51,8 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/reference', 'ProductReference'); #SUPPRESSION DE PRODUITS
             Route::any('{id}/remove', '_RemoveReference'); #SUPPRESSION DE PRODUITS
             Route::any('{search}/search', 'SearchProduct'); #SUPPRESSION DE PRODUITS
+            Route::any('{id}/affect', 'AffectToClasse'); #SUPPRESSION DE VILLES
+
         });
     });
 
@@ -55,7 +61,6 @@ Route::prefix('v1')->group(function () {
     Route::controller(PaysController::class)->group(function () {
         Route::prefix('pays')->group(function () {
             Route::any('all', 'Pays'); #GET ALL PAYS
-
             Route::any('{id}/retrieve', '_PaysRetrieve'); #RECUPERATION D'UN PAYS
             Route::any('{id}/retrieve', '_PaysRetrieve'); #RECUPERATION D'UN PAYS
             Route::any('{id}/update', 'UpdatePays'); #MODIFICATION DE PRODUITS
@@ -63,15 +68,41 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    ###========== VILLES ROUTINGS ========###
-    Route::controller(VillesController::class)->group(function () {
-        Route::prefix('villes')->group(function () {
-            Route::any('add', 'VillesCreate'); #AJOUT DE PRODUITS
-            Route::any('all', 'Villes'); #GET ALL PAYS
-            Route::any('{id}/retrieve', '_VillesRetrieve'); #RECUPERATION D'UNE VILLES
-            Route::any('{id}/retrieve', '_VillesRetrieve'); #RECUPERATION D'UN VILLES
-            Route::any('{id}/update', 'UpdateVilles'); #MODIFICATION DE VILLES
-            Route::any('{id}/delete', '_DeleteVilles'); #SUPPRESSION DE VILLES
+    ###========== COMMUNES ROUTINGS ========###
+    Route::controller(CommuneController::class)->group(function () {
+        Route::prefix('commune')->group(function () {
+            Route::any('add', 'CommuneCreate'); #AJOUT DE PRODUITS
+            Route::any('all', 'Communes'); #GET ALL PAYS
+            Route::any('{id}/retrieve', '_CommuneRetrieve'); #RECUPERATION D'UNE VILLES
+            Route::any('{id}/update', 'UpdateCommune'); #MODIFICATION DE VILLES
+            Route::any('{id}/delete', '_DeleteCommune'); #SUPPRESSION DE VILLES
+            Route::any('{id}/affect', '_AffectToPays'); #SUPPRESSION DE VILLES
+
+        });
+    });
+
+    ###========== ARRONDISSEMENT ROUTINGS ========###
+    Route::controller(ArrondissementController::class)->group(function () {
+        Route::prefix('Arrondissement')->group(function () {
+            Route::any('add', 'ArrondissementCreate'); #AJOUT DE PRODUITS
+            Route::any('all', 'Arrondissements'); #GET ALL PAYS
+            Route::any('{id}/retrieve', '_ArrondissementRetrieve'); #RECUPERATION D'UN VILLES
+            Route::any('{id}/update', 'UpdateArrondissement'); #MODIFICATION DE VILLES
+            Route::any('{id}/delete', '_DeleteArrondissement'); #SUPPRESSION DE VILLES
+            Route::any('{id}/affect', 'AffectToCommune'); #SUPPRESSION DE VILLES
+
+        });
+    });
+    ###========== QUATIER ROUTINGS ========###
+    Route::controller(QuatierController::class)->group(function () {
+        Route::prefix('quatier')->group(function () {
+            Route::any('add', 'QuatierCreate'); #AJOUT DE PRODUITS
+            Route::any('all', 'Quatiers'); #GET ALL PAYS
+            Route::any('{id}/retrieve', '_QuatierRetrieve'); #RECUPERATION D'UN VILLES
+            Route::any('{id}/update', 'UpdateQuatier'); #MODIFICATION DE VILLES
+            Route::any('{id}/delete', '_DeleteQuatier'); #SUPPRESSION DE VILLES
+            Route::any('{id}/affect', 'AffectToArrondissement'); #SUPPRESSION DE VILLES
+
         });
     });
 
@@ -90,6 +121,41 @@ Route::prefix('v1')->group(function () {
             Route::any('all', 'Fan'); #GET ALL FAN
            // Route::any('{id}/retrieve', 'DonsRetrieve'); #RECUPERATION D'UN PAYS
            // Route::any('{id}/delete', '_DeleteDons'); #SUPPRESSION DE PAYS
+        });
+    });
+    ###========== CATEGORY ROUTINGS ========###
+    Route::controller(ProductCategoryController::class)->group(function () {
+        Route::prefix('categories')->group(function () {
+            Route::any('add', 'CategoryCreate'); #AJOUT DE PRODUITS
+            Route::any('all', 'Category'); #GET ALL PAYS
+            Route::any('{id}/retrieve', '_CategoryRetrieve'); #RECUPERATION D'UN VILLES
+            Route::any('{id}/update', '_UpdateCategory'); #MODIFICATION DE VILLES
+            Route::any('{id}/delete', '_DeleteCategory'); #SUPPRESSION DE VILLES
+
+        });
+    });
+    ###========== DIVISIONS ROUTINGS ========###
+    Route::controller(DivisionController::class)->group(function () {
+        Route::prefix('division')->group(function () {
+            Route::any('add', 'DivisionCreate'); #AJOUT DE PRODUITS
+            Route::any('all', 'Division'); #GET ALL PAYS
+            Route::any('{id}/retrieve', '_DivisionRetrieve'); #RECUPERATION D'UN VILLES
+            Route::any('{id}/update', 'UpdateDivistion'); #MODIFICATION DE VILLES
+            Route::any('{id}/delete', '_DeleteDivision'); #SUPPRESSION DE VILLES
+            Route::any('{id}/affect', 'AffectToCategory'); #SUPPRESSION DE VILLES
+
+        });
+    });
+    ###========== CLASSE ROUTINGS ========###
+    Route::controller(ClasseController::class)->group(function () {
+        Route::prefix('classe')->group(function () {
+            Route::any('add', 'ClassCreate'); #AJOUT DE PRODUITS
+            Route::any('all', 'Classe'); #GET ALL PAYS
+            Route::any('{id}/retrieve', '_ClassRetrieve'); #RECUPERATION D'UN VILLES
+            Route::any('{id}/update', 'UpdateClass'); #MODIFICATION DE VILLES
+            Route::any('{id}/delete', '_DeleteClass'); #SUPPRESSION DE VILLES
+            Route::any('{id}/affect', 'AffectToDivision'); #SUPPRESSION DE VILLES
+
         });
     });
 });

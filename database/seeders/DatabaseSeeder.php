@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\User;
+use App\Models\Divison;
+use App\Models\ProductCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,19 +28,19 @@ class DatabaseSeeder extends Seeder
                 "name" => "Cadres et professions intellectuelles supérieures)"
             ],
             [
-                "name" => "Professions intermédiaires.)"
+                "name" => "Professions intermédiaires"
             ],
             [
-                "name" => "Employés.)"
+                "name" => "Employés"
             ],
             [
-                "name" => "Ouvriers.)"
+                "name" => "Ouvriers."
             ],
             [
-                "name" => "Retraités.)"
+                "name" => "Retraités"
             ],
             [
-                "name" => "Autres personnes sans activité professionnelle.)"
+                "name" => "Autres personnes sans activité professionnelle."
             ]
         ];
 
@@ -90,32 +92,167 @@ class DatabaseSeeder extends Seeder
                 "name" => "Algerie"
             ],
             [
+                "name" => "Angola"
+            ],
+            [
                 "name" => "Bénin"
             ],
             [
-                "name" => "Togo"
+                "name" => "Bostwana"
             ],
             [
-                "name" => "Nigeria"
+                "name" => "Burkina Fasso"
             ],
             [
-                "name" => "Niger"
+                "name" => "Burundi"
             ],
             [
-                "name" => "Ghana"
+                "name" => "Cameroun"
+            ],
+            [
+                "name" => "Cap-Vert"
+            ],
+            [
+                "name" => "Centreafrique"
+            ],
+            [
+                "name" => "Comores"
+            ],
+            [
+                "name" => "Congo"
+            ],
+            [
+                "name" => "Côte d'Ivoire"
+            ],
+            [
+                "name" => "Djibouti"
+            ],
+            [
+                "name" => "Egytpte"
+            ],
+            [
+                "name" => "Erythrée"
+            ],
+            [
+                "name" => "Eswatini"
+            ],
+            [
+                "name" => "Ethipie"
             ],
             [
                 "name" => "Gabon"
             ],
             [
+                "name" => "Gambie"
+            ],
+            [
+                "name" => "Ghana"
+            ],
+            [
+                "name" => "Guinée équatoriale"
+            ],
+            [
+                "name" => "Guinée"
+            ],
+            [
+                "name" => "Guinée Bissau"
+            ],
+            [
+                "name" => "kenya"
+            ],
+            [
+                "name" => "Lesotho"
+            ],
+            [
+                "name" => "Libéria"
+            ],
+            [
+                "name" => "Libye"
+            ],
+            [
+                "name" => "Madagascar"
+            ],
+            [
+                "name" => "Malawi"
+            ],
+            [
                 "name" => "Mali"
+            ],
+            [
+                "name" => "Maroc"
+            ],
+            [
+                "name" => "Maurice"
+            ],
+            [
+                "name" => "Mauritanie"
+            ],
+            [
+                "name" => "Mozambique"
+            ],
+            [
+                "name" => "Namibie"
+            ],
+            [
+                "name" => "Niger"
+            ],
+            [
+                "name" => "Nigeria"
+            ],
+            [
+                "name" => "Ouganda"
+            ],
+            [
+                "name" => "RD Congo"
+            ],
+            [
+                "name" => "Rwanda"
+            ],
+            [
+                "name" => "Sao Tomé-et-Principe"
+            ],
+            [
+                "name" => "Sénégal"
+            ],
+            [
+                "name" => "Seychelles"
+            ],
+            [
+                "name" => "Sera Leone"
+            ],
+            [
+                "name" => "Somalie"
+            ],
+            [
+                "name" => "Soudan"
+            ],
+            [
+                "name" => "Soudan du Sud"
+            ],
+            [
+                "name" => "Tanzanie"
             ],
             [
                 "name" => "Tchad"
             ],
             [
-                "name" => "Sénégal"
+                "name" => "Togo"
+            ],
+            [
+                "name" => "Tunisie"
+            ],
+            [
+                "name" => "Zambie"
+            ],
+            [
+                "name" => "Zimbabwe"
             ]
+            
+
+
+
+
+            
         ];
 
         foreach ($pays as $pay) {
@@ -124,29 +261,54 @@ class DatabaseSeeder extends Seeder
         ##======== CREATION DES CATEGORIES PAR DEFAUT ============####
         $villes = [
             [
-                "name" => " Tembisa"
+                "name" => " Tembisa",
+                "pays_id" =>  1
+
             ],
             [
-                "name" => "Benoni"
+                "name" => "Benoni",
+                "pays_id" =>  1
             ],
             [
-                "name" => "Port Elizabeth"
+                "name" => "Port Elizabeth",
+                "pays_id" =>  1
             ],
             [
-                "name" => "Pretoria"
+                "name" => "Pretoria",
+                "pays_id" =>  1
             ],
             [
-                "name" => "Soweto"
+                "name" => "Soweto",
+                "pays_id" =>  1
             ],
             [
-                "name" => "Johannesburg"
+                "name" => "Johannesburg",
+                "pays_id" =>  1
             ],
 
             [
-                "name" => "Durban"
+                "name" => "Durban",
+                "pays_id" =>  1
             ],
             [
-                "name" => "Capte Town"
+                "name" => "Capte Town",
+                "pays_id" =>  1
+            ],
+            [
+                "name" => "Alger ",
+                "pays_id" =>  2
+            ],
+            [
+                "name" => " Oran",
+                "pays_id" =>  2
+            ],
+            [
+                "name" => " Luanda",
+                "pays_id" =>  3
+            ],
+            [
+                "name" => " Lubango",
+                "pays_id" =>  3
             ]
         ];
 
@@ -215,5 +377,41 @@ class DatabaseSeeder extends Seeder
         foreach ($products as $product) {
             \App\Models\Product::factory()->create($product);
         }
+        $arrondissement = [
+            [
+                "name" => "12é"
+            ],
+            [
+                "name" => "13é"
+            ],
+            [
+                "name" => "14é"
+            ], [
+                "name" => "15é"
+            ]
+        ];
+
+        foreach ($arrondissement as $arrondissements) {
+            \App\Models\Arrondissement::factory()->create($arrondissements);
+        }
+        $commune = [
+            [
+                "name" => "cotonou"
+            ],
+            [
+                "name" => "ouemé"
+            ],
+            [
+                "name" => "parakou"
+            ], [
+                "name" => "calavi"
+            ]
+        ];
+
+        foreach ($commune as $communes) {
+            \App\Models\Commune::factory()->create($communes);
+        }
+
+       
     }
 }

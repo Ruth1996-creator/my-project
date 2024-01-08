@@ -25,16 +25,23 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
+            $table->foreignId("quatier")
+                ->nullable()
+                ->constrained("quatiers", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+
+
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password')->unique();
 
             $table->string('enseigne')->nullable();
-            $table->string('indication')->nullable();
-            $table->string('phone')->unique();
-            $table->string('sexe');
+            $table->string('phone')->unique()->nullable();
+            $table->string('sexe')->nullable();
             $table->string('photo')->nullable();
             $table->date('annee')->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

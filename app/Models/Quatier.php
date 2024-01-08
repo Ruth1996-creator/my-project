@@ -7,20 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Villes extends Model
+class Quatier extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
-        'pays_id'
-
+        'name'
     ];
-    function Pays(): BelongsTo
-    {
-        return $this->belongsTo(Pays::class, "pays_id");
-    }
     function users(): HasMany
     {
-        return $this->hasMany(User::class, "ville_id");
+        return $this->hasMany(User::class, "quatier");
     }
+    function arrondissement(): BelongsTo
+    {
+        return $this->belongsTo(Arrondissement::class, "arrondissement_id")->with(["commune"]);
+    }
+    
 }

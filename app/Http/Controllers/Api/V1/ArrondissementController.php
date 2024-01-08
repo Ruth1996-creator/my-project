@@ -1,16 +1,18 @@
 <?php
+
 namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 
-class VillesController extends VILLES_HELPER
+class ArrondissementController extends ARRONDISSEMENT_HELPER
 {
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
         $this->middleware("CheckIfUserIsEditer")->only([
-            "VillesCreate",
-            "UpdateVilles",
-            "_DeleteVilles",
+            "ArrondissementCreate",
+            "UpdateArrondissement",
+            "_DeleteArrondissement",
+            "AffectToCommune"
         ]);
     }
 
@@ -19,7 +21,7 @@ class VillesController extends VILLES_HELPER
         //{
             //$this->middleware(['auth:api', 'scope:api-access']);
         //}
-        function VillesCreate(Request $request)
+        function ArrondissementCreate(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
@@ -28,7 +30,7 @@ class VillesController extends VILLES_HELPER
         };
        
         #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
-        $validator = $this->VillesCreate_Validator($request->all());
+        $validator = $this->ArrondissementCreate_Validator($request->all());
 
         if ($validator->fails()) {
             #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
@@ -36,10 +38,10 @@ class VillesController extends VILLES_HELPER
         }
 
         #ENREGISTREMENT DANS LA DB VIA **createProduct** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
-        return $this->createVilles($request);
+        return $this->createArrondissement($request);
     }
       #GET ALL USERS
-      function Villes(Request $request)
+      function Arrondissements(Request $request)
       {
           #VERIFICATION DE LA METHOD
           if ($this->methodValidation($request->method(), "GET") == False) {
@@ -48,10 +50,10 @@ class VillesController extends VILLES_HELPER
           };
   
           #RECUPERATION DE TOUT LES UTILISATEURS AVEC LEURS ROLES & TRANSPORTS
-          return $this->getVilles();
+          return $this->getArrondissements();
       }
   
-          function _VillesRetrieve(Request $request, $id)
+          function _ArrondissementRetrieve(Request $request, $id)
       {
           #VERIFICATION DE LA METHOD
           if ($this->methodValidation($request->method(), "GET") == False) {
@@ -60,10 +62,10 @@ class VillesController extends VILLES_HELPER
           };
   
           #RECUPERATION D'UN PAYS VIA SON **id**
-          return $this->villesretrieve($id);
+          return $this->arrondissementretrieve($id);
       }
   
-      function UpdateVilles(Request $request,$id)
+      function UpdateArrondissement(Request $request,$id)
       {
           #VERIFICATION DE LA METHOD
           if ($this->methodValidation($request->method(), "POST") == False) {
@@ -79,11 +81,11 @@ class VillesController extends VILLES_HELPER
        //    }
    
           #RECUPERATION D'UN PRODUIT VIA SON **id**
-          return $this->_updateVilles($request,$id);
+          return $this->_updateArrondissement($request,$id);
       }
   
       #SUPPRIMER UN PRODUIT
-      function _DeleteVilles(Request $request,$id)
+      function _DeleteArrondissement(Request $request,$id)
       {
           #VERIFICATION DE LA METHOD
           if ($this->methodValidation($request->method(), "POST") == False) {
@@ -92,6 +94,17 @@ class VillesController extends VILLES_HELPER
           };
    
           #RECUPERATION D'UN PRODUIT VIA SON **id**
-          return $this->deleteVilles($request,$id);
+          return $this->deleteArrondissement($request,$id);
+      }
+      function AffectToCommune(Request $request,$id)
+      {
+          #VERIFICATION DE LA METHOD
+          if ($this->methodValidation($request->method(), "POST") == False) {
+              #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+              return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+          };
+   
+          #RECUPERATION D'UN PRODUIT VIA SON **id**
+          return $this->affectCommune($request,$id);
       }
 }

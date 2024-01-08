@@ -27,4 +27,8 @@ class Product extends Model
     {
         return $this->belongsTo(ProductCategory::class, "product_category");
     }
+    function classe(): BelongsTo
+    {
+        return $this->belongsTo(Classe::class, "classe")->with(["Division"]);
+    }
 }

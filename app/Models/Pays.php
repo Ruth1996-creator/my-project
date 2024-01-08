@@ -12,8 +12,12 @@ class Pays extends Model
     protected $fillable = [
         'name'
     ];
-    function Villes(): HasMany
+    function Communes(): HasMany
     {
         return $this->hasMany(Villes::class, "pays_id");
+    }
+    function users(): HasMany
+    {
+        return $this->hasMany(User::class, "pays_id");
     }
 }

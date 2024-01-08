@@ -30,7 +30,13 @@ class User extends Authenticatable
         'sexe',
         'photo',
         "annee",
-        "email"
+        "email",
+        "pays_id",
+        "quatier",
+        "arrondissement_id",
+        "commune_id"
+
+        
     ];
 
     /**
@@ -66,6 +72,18 @@ class User extends Authenticatable
     }
     function Likes(): HasMany
     {
-        return $this->hasMany(Product::class, "user");
+        return $this->hasMany(Like::class, "user");
+    }
+    
+    function pays(): BelongsTo
+    {
+        return $this->belongsTo(Pays::class, "pays_id")->with(["communes"]);
+    }
+    function arrondissement(): BelongsTo
+    {
+        return $this->belongsTo(Arrondissement::class, "arrondissement_id");
+    }function commune(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class, "commune_id");
     }
 }

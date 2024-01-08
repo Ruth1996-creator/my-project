@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Classe;
+use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Validator;
@@ -67,20 +69,6 @@ class PRODUCT_HELPER extends BASE_HELPER
         // $formData["product_category"]=$product_category->id;
 
         $user = Product::create($formData); #ENREGISTREMENT DU PRODUIT DANS LA DB
-
-        #=====ENVOIE DE NOTIFICATION =======~####
-        $message = "Votre Produit a été ajouter avec succès sur FOCUS 54";
-
-        try {
-            Send_Notification(
-                $user,
-                "CREATION DE PRODUIT SUR FOCUS 54",
-                $message
-            );
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-
         return self::sendResponse($user, 'produit crée avec succès!!');
     }
     ##_____RETRIEVE PRODUCT______##
@@ -97,7 +85,7 @@ class PRODUCT_HELPER extends BASE_HELPER
 
     static function getProducts()
     {
-        $products =  Product::with(["user", "category"])->orderBy("id", "desc")->get();
+        $products =  Product::with(["user", "classe"])->orderBy("id", "desc")->get();
         return self::sendResponse($products, 'Tout les produits récupérés avec succès!!');
     }
     ##======== NEW PASSWORD VALIDATION =======##
@@ -182,7 +170,28 @@ class PRODUCT_HELPER extends BASE_HELPER
         return self::sendResponse($product, "Votre produit a été supprimer avec succès ");
     }
     ##___FIN SUPPRESSION  D'UN PRODUIT____~###
+    
+    static function affectClasse($request, $id)
+    {
+        $product = Product::find($id);
+        $classe = Classe::find($request->get("classe"));
 
+        if(!$request->get("classe")){
+            return self::sendError("Le champ classe est réquise!", 404);
+        }
+        // return $user;
+        if (!$product) {
+            return self::sendError("Ce produit n'existe pas!", 404);
+        };
+        if (!$classe) {
+            return self::sendError("Cette classe n'existe pas!", 404);
+        };
+
+        $product->classe = $request->get("classe");
+        $product->save();
+
+        return self::sendResponse($product, "Produit affectée a la classe  avec succès ");
+    }
 
     static function createProductReference($request, $id)
     {
@@ -239,7 +248,7 @@ class PRODUCT_HELPER extends BASE_HELPER
                 if (!$rep) {
                     $resp = str::contains(strtolower($product['description']), strtolower($search));
                 }
-                return $resp;
+                return $rep;
             }
         )->all();
 

@@ -11,7 +11,8 @@ class Arrondissement extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name'
+        'name',
+        'commune_id'
 
     ];
     function users(): HasMany

@@ -11,7 +11,6 @@ class CLASS_HELPER extends BASE_HELPER
     {
         return [
             "name" => ["required"],
-            'division' => ['required', 'integer']
 
         ];
     }
@@ -20,8 +19,6 @@ class CLASS_HELPER extends BASE_HELPER
     {
         return [
             "name.required" => "Le nom de la classe  est réquis!",
-            "division.required" => "Veuillez préciser la division de la classe!",
-            "division.integer" => "La division de la classe doit être un entier!",
 
         ];
     }
@@ -41,10 +38,7 @@ class CLASS_HELPER extends BASE_HELPER
     {
         $formData = $request->all();
         $user = request()->user();
-        $division = Division::find($formData["division"]);
-        if (!$division) {
-            return self::sendError("Cette division n'existe pas!", 404);
-        }
+        
         // return $user->id; 
         ####___TRAITEMENT DE L'IMAGE
 

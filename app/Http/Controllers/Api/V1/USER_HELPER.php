@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Category;
 use App\Models\Role;
 use App\Models\Typeuser;
+use App\Models\Pays;
+use App\Models\Arrondissement;
+use App\Models\Commune;
+use App\Models\Quatier;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -152,6 +156,10 @@ class USER_HELPER extends BASE_HELPER
     {
         $formData = $request->all();
         $category = Category::find($formData["category"]);
+        $pays = Pays::find($formData["pays_id"]);
+        $quatier = Quatier::find($formData["quatier"]);
+        $arrondissement = Arrondissement::find($formData["arrondissement_id"]);
+        $commune = Commune::find($formData["commune_id"]);
         $type = Typeuser::find($formData["type"]);
 
         if (!$category) {
@@ -162,6 +170,23 @@ class USER_HELPER extends BASE_HELPER
             return self::sendError("Ce type d'utilisateur n'existe pas!", 404);
         }
 
+        if (!$pays) {
+            return self::sendError("Ce pays n'existe pas!", 404);
+        }
+       
+
+        if (!$quatier) {
+            return self::sendError("Ce quatier  n'existe pas!", 404);
+        }
+
+
+        if (!$arrondissement) {
+            return self::sendError("Ce arrondissement  n'existe pas!", 404);
+        }
+
+        if (!$commune) {
+            return self::sendError("Cette commune d'utilisateur n'existe pas!", 404);
+        }
         ####___TRAITEMENT DE L'IMAGE
         $image = $request->file('photo');
         $image_name = $image->getClientOriginalName();
@@ -202,7 +227,9 @@ class USER_HELPER extends BASE_HELPER
             // $cookie = Cookie("jwt", $token, 60 * 24);
             $user["token"] = $token;
             $user["pays"] = $user->pays;
-            $user["ville"] = $user->Ville;
+            $user["commune"] = $user->commune;
+            $user["arrondissement"] = $user->arrondissement;
+            $user["quatier"] = $user->quatier;
 
             #RENVOIE D'ERREURE VIA **sendResponse** DE LA CLASS BASE_HELPER
             return self::sendResponse($user, 'Vous etes connecté(e) avec succès!!');
@@ -214,7 +241,7 @@ class USER_HELPER extends BASE_HELPER
 
     static function getUsers()
     {
-        $users =  User::with("Villes")->orderByorderBy("id", "desc")->get();
+        $users =  User::with("category","Type","pays","Commune","arrondissement","quatier")->orderByorderBy("id", "desc")->get();
         return self::sendResponse($users, 'Tout les utilisatreurs récupérés avec succès!!');
     }
 
@@ -239,11 +266,11 @@ class USER_HELPER extends BASE_HELPER
 
     static function retrieveUsers($id)
     {
-        $user = User::with("pays","Ville")->find($id);
+        $user = User::with("category","Type","pays","Commune","arrondissement","quatier")->find($id);
         if (!$user) {
             return self::sendError("Ce utilisateur n'existe pas!", 404);
         }
-
+return $user;
         return self::sendResponse($user, "Utilisateur récupé avec succès:!!");
     }
 

@@ -77,13 +77,24 @@ class User extends Authenticatable
     
     function pays(): BelongsTo
     {
-        return $this->belongsTo(Pays::class, "pays_id")->with(["communes"]);
+        return $this->belongsTo(Pays::class, "pays_id");
     }
     function arrondissement(): BelongsTo
     {
         return $this->belongsTo(Arrondissement::class, "arrondissement_id");
-    }function commune(): BelongsTo
+    }
+    function commune(): BelongsTo
     {
         return $this->belongsTo(Commune::class, "commune_id");
     }
+    function quatier(): BelongsTo
+    {
+        return $this->belongsTo(Quatier::class, "quatier");
+    }
+    function Type(): BelongsTo
+    {
+        return $this->belongsTo(Typeuser::class, "type");
+    }
+
+
 }

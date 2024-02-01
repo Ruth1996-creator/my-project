@@ -3,9 +3,57 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Don;
+use Illuminate\Support\Facades\Validator;
+
 
 class DONS_HELPER extends BASE_HELPER
 {
+    static function add_rules(): array
+    {
+        return [
+            "user" => ["required"],
+            "montant" => ["required"],
+
+
+
+        ];
+    }
+
+    static function add_messages(): array
+    {
+        return [
+            "user.required" => "Le nom du  donnateur  est réquis!",
+            "montant.required" => "Le montant du  don  est réquis!",
+
+
+
+        ];
+    }
+
+    static function DonCreate_Validator($formDatas)
+    {
+        
+        $rules = self::add_rules();
+        $messages = self::add_messages();
+
+        $validator = Validator::make($formDatas, $rules, $messages);
+        return $validator;
+    }
+
+static function createDon($request)
+    {
+        $formData = $request->all();
+        $user = request()->user();
+        $formData["statut"] = "En cour...";
+
+        $don = Don::create($formData); #ENREGISTREMENT DE LA VILLE DANS LA DB
+
+        #=====ENVOIE DE NOTIFICATION =======~####
+         //throw $th;
+        
+
+        return self::sendResponse($don, 'Don enregistrer avec succès!!');
+    }
     static function getDons()
     {
         $dons =  Don::orderBy("id", "desc")->get();

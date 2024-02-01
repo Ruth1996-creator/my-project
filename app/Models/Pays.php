@@ -14,7 +14,7 @@ class Pays extends Model
     ];
     function Communes(): HasMany
     {
-        return $this->hasMany(Villes::class, "pays_id");
+        return $this->hasMany(Commune::class, "pays_id");
     }
     function users(): HasMany
     {

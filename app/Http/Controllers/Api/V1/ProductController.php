@@ -18,7 +18,7 @@ class ProductController extends PRODUCT_HELPER
         ]);
         $this->middleware("CheckIfUserIsVendor")->only([
             "ProductReference",
-            //"DeleteReference",
+            "DeleteReference",
         ]);
     }
 

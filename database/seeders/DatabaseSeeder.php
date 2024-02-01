@@ -259,69 +259,13 @@ class DatabaseSeeder extends Seeder
             \App\Models\Pays::factory()->create($pay);
         };
         ##======== CREATION DES CATEGORIES PAR DEFAUT ============####
-        $villes = [
-            [
-                "name" => " Tembisa",
-                "pays_id" =>  1
-
-            ],
-            [
-                "name" => "Benoni",
-                "pays_id" =>  1
-            ],
-            [
-                "name" => "Port Elizabeth",
-                "pays_id" =>  1
-            ],
-            [
-                "name" => "Pretoria",
-                "pays_id" =>  1
-            ],
-            [
-                "name" => "Soweto",
-                "pays_id" =>  1
-            ],
-            [
-                "name" => "Johannesburg",
-                "pays_id" =>  1
-            ],
-
-            [
-                "name" => "Durban",
-                "pays_id" =>  1
-            ],
-            [
-                "name" => "Capte Town",
-                "pays_id" =>  1
-            ],
-            [
-                "name" => "Alger ",
-                "pays_id" =>  2
-            ],
-            [
-                "name" => " Oran",
-                "pays_id" =>  2
-            ],
-            [
-                "name" => " Luanda",
-                "pays_id" =>  3
-            ],
-            [
-                "name" => " Lubango",
-                "pays_id" =>  3
-            ]
-        ];
-
-        foreach ($villes as $ville) {
-            \App\Models\Villes::factory()->create($ville);
-        }
+        
         $products = [
             [
                 "user" => User::find(2),
                 "image" => "Durban",
                 "productname" => " Post-télévision",
                 "description" => "télévision",
-                "price" => "Port 2500",
                 "product_category" => 2,
                 "reference" => "12ert"
             ],
@@ -330,7 +274,6 @@ class DatabaseSeeder extends Seeder
                 "image" => "Durban",
                 "productname" => " Post-radio",
                 "description" => "radio",
-                "price" => "Port 2500",
                 "product_category" => 2,
                 "reference" => "12ert"
             ],
@@ -339,7 +282,6 @@ class DatabaseSeeder extends Seeder
                 "image" => "Durban",
                 "productname" => " Lait",
                 "description" => "lait",
-                "price" => "Port 2500",
                 "product_category" => 2,
                 "reference" => "12ert"
             ],
@@ -348,7 +290,6 @@ class DatabaseSeeder extends Seeder
                 "image" => "Durban",
                 "productname" => " doko-",
                 "description" => "doko",
-                "price" => "Port 2500",
                 "product_category" => 2,
                 "reference" => "12ert"
             ],
@@ -357,7 +298,6 @@ class DatabaseSeeder extends Seeder
                 "image" => "Durban",
                 "productname" => " pagne",
                 "description" => "pagne",
-                "price" => "Port 12500",
                 "product_category" => 2,
                 "reference" => "15ert"
             ],
@@ -366,7 +306,6 @@ class DatabaseSeeder extends Seeder
                 "image" => "Durban",
                 "productname" => " yaout",
                 "description" => "yaout",
-                "price" => "Port 2500",
                 "product_category" => 2,
                 "reference" => "ert"
             ],
@@ -377,16 +316,52 @@ class DatabaseSeeder extends Seeder
         foreach ($products as $product) {
             \App\Models\Product::factory()->create($product);
         }
+
+        $commune = [
+            [
+                "pays_id"=>2,
+                "name" => "cotonou"
+            ],
+            [
+                "pays_id"=>5,
+
+                "name" => "ouemé"
+            ],
+            [
+                "pays_id"=>12,
+
+                "name" => "parakou"
+            ], 
+            [
+                "pays_id"=>22,
+
+                "name" => "calavi"
+            ]
+        ];
+
+        foreach ($commune as $communes) {
+            \App\Models\Commune::factory()->create($communes);
+        }
+
         $arrondissement = [
             [
+                "commune_id"=>2,
+
                 "name" => "12é"
             ],
             [
+                "commune_id"=>1,
+
                 "name" => "13é"
             ],
             [
+                "commune_id"=>3,
+
                 "name" => "14é"
-            ], [
+            ],
+                
+             [
+                "commune_id"=>2,
                 "name" => "15é"
             ]
         ];
@@ -394,22 +369,36 @@ class DatabaseSeeder extends Seeder
         foreach ($arrondissement as $arrondissements) {
             \App\Models\Arrondissement::factory()->create($arrondissements);
         }
-        $commune = [
+
+        $quatier = [
             [
-                "name" => "cotonou"
+                "arrondissement_id" => 1,
+
+                "name" => "akpakpa"
+
             ],
+
             [
-                "name" => "ouemé"
+                "arrondissement_id" => 3,
+
+                "name" => "godomey"
             ],
+
             [
-                "name" => "parakou"
-            ], [
-                "name" => "calavi"
+                "arrondissement_id" => 2,
+
+                "name" => "cadjehoun"
+            ], 
+
+            [
+                "arrondissement_id" => 3,
+
+                "name" => "vodjè"
             ]
         ];
 
-        foreach ($commune as $communes) {
-            \App\Models\Commune::factory()->create($communes);
+        foreach ($quatier as $quatiers) {
+            \App\Models\Quatier::factory()->create($quatiers);
         }
 
        

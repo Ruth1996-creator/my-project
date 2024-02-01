@@ -12,6 +12,7 @@ class Commune extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'pays_id',
     ];
     function users(): HasMany
     {

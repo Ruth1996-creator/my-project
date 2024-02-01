@@ -15,27 +15,25 @@ class PRODUCT_HELPER extends BASE_HELPER
     static function add_rules(): array
     {
         return [
-            "image" => ["required"],
+            //"image" => ["required"],
             'productname' => ['required'],
             'description' => ['required'],
-            'price' => ['required'],
             'product_category' => ['required', 'integer'],
-            'reference' => ['required']
-
+           // "reference" => ["required"],
+             
         ];
     }
 
     static function add_messages(): array
     {
         return [
-            "image.required" => "Veuillez choisir une image ",
+          //  "image.required" => "Veuillez choisir une image ",
             "productname.required" => "Le nom du produit est réquis!",
             "description.required" => "La  description du produit  est réquise!",
-            "price.required" => "Le prix du produit  est réquis!",
 
             "product_category.required" => "Veuillez préciser la catégorie du produit!",
             "product_category.integer" => "La catégorie du produit doit être un entier!",
-            "reference.required" => "La reference du produit est requise!",
+           // "reference.required" => "La reference du produit est requise!",
 
         ];
     }
@@ -61,12 +59,8 @@ class PRODUCT_HELPER extends BASE_HELPER
         }
         // return $user->id; 
         ####___TRAITEMENT DE L'IMAGE
-        $image = $request->file('image');
-        $image_name = $image->getClientOriginalName();
-        $image->move("profils", $image_name);
-        $formData["image"] = asset("products/" . $image_name);
-        $formData["user"] = $user->id;
-        // $formData["product_category"]=$product_category->id;
+       
+         $formData["product_category"]=$product_category->id;
 
         $user = Product::create($formData); #ENREGISTREMENT DU PRODUIT DANS LA DB
         return self::sendResponse($user, 'produit crée avec succès!!');
@@ -92,12 +86,12 @@ class PRODUCT_HELPER extends BASE_HELPER
     static function NEW_PRODUCT_rules(): array
     {
         return [
-            "image" => ["file"],
+           // "image" => ["file"],
             "productname" => ["string"],
             "description" => ["string"],
             "product_category" => ["integer"],
-            "price" => ["string"],
-            "reference" => ["string"]
+            //"price" => ["string"],
+            //"reference" => ["string"]
         ];
     }
 
@@ -203,13 +197,27 @@ class PRODUCT_HELPER extends BASE_HELPER
             return self::sendError("Ce produit n'existe pas!", 404);
         };
 
-        if ($product->user) {
-            return self::sendError("Ce produit n'est pas disponible", 404);
-        }
+        // if ($product->user) {
+        // return self::sendError("Ce produit n'est pas disponible", 404);
+        // }
 
         $product->reference = $formData["reference"];
         $product->user = request()->user()->id;
+
+        // return $request->file('image');
+        ##TRAITEMENT DE L'IMAGEn
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            $image_name = $image->getClientOriginalName();
+            $image->move("products", $image_name);
+            $formData["image"] = asset("products/" . $image_name);
+            $product->image = $formData["image"];
+        }
+        
         $product->save();
+
+        ## Traitement de l'image
+        
         return self::sendResponse($product, "Votre reference a été ajouté avec succès ");
         #=====ENVOIE DE NOTIFICATION =======~####
         //$message = "Votre Reference a été ajouter avec succès sur FOCUS 54";

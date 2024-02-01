@@ -25,6 +25,25 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
+                $table->foreignId("pays_id")
+                ->nullable()
+                ->constrained("pays", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+
+                $table->foreignId("commune_id")
+                ->nullable()
+                ->constrained("communes", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+
+                 $table->foreignId("arrondissement_id")
+                ->nullable()
+                ->constrained("arrondissements", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+
+
             $table->foreignId("quatier")
                 ->nullable()
                 ->constrained("quatiers", "id")

@@ -11,9 +11,9 @@ use App\Http\Controllers\Api\V1\DonController;
 use App\Http\Controllers\Api\V1\LikeController;
 use App\Http\Controllers\Api\V1\PaysController;
 use App\Http\Controllers\Api\V1\ProductCategoryController;
+use App\Http\Controllers\Api\V1\ProductReferenceController;
 use App\Http\Controllers\Api\V1\QuatierController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,10 +48,19 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/retrieve', 'ProductRetrieve'); #RECUPERATION D'UN PRODUIT
             Route::any('{id}/update', 'UpdateProduct'); #MODIFICATION DE PRODUITS
             Route::any('{id}/delete', '_DeleteProduct'); #SUPPRESSION DE PRODUITS
-            Route::any('{id}/reference', 'ProductReference'); #SUPPRESSION DE PRODUITS
-            Route::any('{id}/remove', '_RemoveReference'); #SUPPRESSION DE PRODUITS
+           // Route::any('{id}/reference', 'ProductReference'); #SUPPRESSION DE PRODUITS
+           // Route::any('{id}/remove', '_RemoveReference'); #SUPPRESSION DE PRODUITS
             Route::any('{search}/search', 'SearchProduct'); #SUPPRESSION DE PRODUITS
             Route::any('{id}/affect', 'AffectToClasse'); #SUPPRESSION DE VILLES
+
+        });
+    });
+
+
+     Route::controller(ProductReferenceController::class)->group(function () {
+        Route::prefix('reference')->group(function () {
+            Route::any('add', 'ProductReference'); #SUPPRESSION DE PRODUITS
+            Route::any('{id}/remove', '_RemoveReference'); #SUPPRESSION DE PRODUITS
 
         });
     });
@@ -61,6 +70,7 @@ Route::prefix('v1')->group(function () {
     Route::controller(PaysController::class)->group(function () {
         Route::prefix('pays')->group(function () {
             Route::any('all', 'Pays'); #GET ALL PAYS
+            Route::any('add', 'PaysCreate'); #AJOUT DE PRODUITS
             Route::any('{id}/retrieve', '_PaysRetrieve'); #RECUPERATION D'UN PAYS
             Route::any('{id}/retrieve', '_PaysRetrieve'); #RECUPERATION D'UN PAYS
             Route::any('{id}/update', 'UpdatePays'); #MODIFICATION DE PRODUITS
@@ -109,6 +119,7 @@ Route::prefix('v1')->group(function () {
     ###========== DONS ROUTINGS ========###
     Route::controller(DonController::class)->group(function () {
         Route::prefix('dons')->group(function () {
+            Route::any('add', 'DonCreate'); #GET ALL DONS
             Route::any('all', 'Dons'); #GET ALL DONS
             Route::any('{id}/retrieve', 'DonsRetrieve'); #RECUPERATION D'UN PAYS
             Route::any('{id}/delete', '_DeleteDons'); #SUPPRESSION DE PAYS

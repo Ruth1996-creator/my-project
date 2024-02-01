@@ -4,18 +4,66 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Pays;
 use App\Models\Villes;
+use Illuminate\Support\Facades\Validator;
 
 class PAYS_HELPER extends BASE_HELPER
+
 {
+
+
+static function add_rules(): array
+    {
+        return [
+            "name" => ["required"],
+
+        ];
+    }
+
+    static function add_messages(): array
+    {
+        return [
+            "name.required" => "Le nom du  pays  est réquis!",
+
+        ];
+    }
+
+    static function PaysCreate_Validator($formDatas)
+    {
+        
+        $rules = self::add_rules();
+        $messages = self::add_messages();
+
+        $validator = Validator::make($formDatas, $rules, $messages);
+        return $validator;
+    }
+
+
+    static function createPays($request)
+    {
+        $formData = $request->all();
+        $user = request()->user();
+
+        
+
+        $pays = Pays::create($formData); #ENREGISTREMENT DE LA VILLE DANS LA DB
+
+        #=====ENVOIE DE NOTIFICATION =======~####
+         //throw $th;
+        
+
+        return self::sendResponse($pays, 'Pays ajoutée avec succès!!');
+    }
+
+
     static function getPays()
     {
-        $pays =  Pays::with("Villes")->orderBy("id", "desc")->get();
+        $pays =  Pays::with("Communes")->orderBy("id", "desc")->get();
         return self::sendResponse($pays, 'Tout les pays récupérés avec succès!!');
     }
     ##_____RETRIEVE D'UN PAYS______##
     static function PaysRetrieve($id)
     {
-        $pays = Pays::with("Villes")->find($id);
+        $pays = Pays::with("Communes")->find($id);
         if (!$pays) {
             return self::sendError("Ce pays n'existe pas!", 404);
         }

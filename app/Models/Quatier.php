@@ -11,7 +11,9 @@ class Quatier extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name'
+        'name',
+        'arrondissement_id',
+
     ];
     function users(): HasMany
     {

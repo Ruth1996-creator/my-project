@@ -18,11 +18,26 @@ return new class extends Migration
             ->constrained("users", "id")
             ->onUpdate("CASCADE")
             ->onDelete("CASCADE");
+
+             $table->foreignId("product_category")
+            ->nullable()
+            ->constrained("product_categories", "id")
+            ->onUpdate("CASCADE")
+            ->onDelete("CASCADE"); 
+
             $table->string('image')->nullable();
             $table->string('productname');
             $table->string('description');
-            $table->string('price');
+            $table->string('reference')->nullable();
+
+             $table->foreignId("classe")
+            ->nullable()
+            ->constrained("classes", "id")
+            ->onUpdate("CASCADE")
+            ->onDelete("CASCADE"); 
+
             $table->timestamps();
+
         });
     }
 
